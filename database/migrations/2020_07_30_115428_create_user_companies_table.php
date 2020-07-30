@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProposalsTable extends Migration
+class CreateUserCompaniesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,23 +13,16 @@ class CreateProposalsTable extends Migration
      */
     public function up()
     {
-        Schema::create('proposals', function (Blueprint $table) {
+        Schema::create('user_companies', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->unsignedBigInteger('company_id');
-            $table->foreign('company_id')->references('id')
-                ->on('companies')
-                ->onDelete('cascade');
-            $table->unsignedBigInteger('theme_id');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')
                 ->on('users')
                 ->onDelete('cascade');
-            $table->foreign('theme_id')->references('id')
-                ->on('themes')
+            $table->unsignedBigInteger('company_id');
+            $table->foreign('company_id')->references('id')
+                ->on('companies')
                 ->onDelete('cascade');
-            $table->boolean('is_live')->default(1);
-            $table->integer('views')->default(0);
             $table->timestamps();
         });
     }
@@ -41,6 +34,6 @@ class CreateProposalsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('proposals');
+        Schema::dropIfExists('user_companies');
     }
 }

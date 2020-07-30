@@ -15,6 +15,14 @@ class CreateProposalSectionsTable extends Migration
     {
         Schema::create('proposal_sections', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->unsignedBigInteger('proposal_id');
+            $table->foreign('proposal_id')->references('id')
+                ->on('proposals')
+                ->onDelete('cascade');
+            $table->integer('sort_number')->default(0);
+            $table->unsignedBigInteger('mediable_id');
+            $table->string('mediable_type');
             $table->timestamps();
         });
     }
