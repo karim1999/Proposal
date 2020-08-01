@@ -14,6 +14,7 @@ class User extends Authenticatable implements HasMedia
     use Notifiable;
     use HasRoles;
     use InteractsWithMedia;
+    use \Staudenmeir\EloquentHasManyDeep\HasRelationships;
 
     /**
      * The attributes that are mass assignable.
@@ -44,6 +45,14 @@ class User extends Authenticatable implements HasMedia
 
     public function companies(){
         return $this->belongsToMany('App\Company', 'user_companies')->withTimestamps();
+    }
+
+    public function companies_proposals(){
+        return $this->hasManyDeep('App\Proposal', ['user_companies', 'App\Company']);
+    }
+
+    public function proposals(){
+        return $this->hasMany('App\Proposal');
     }
 
     public function registerMediaCollections(): void

@@ -16,7 +16,8 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.1",
         "spatie/laravel-medialibrary": "^8.0.0",
-        "spatie/laravel-permission": "^3.13"
+        "spatie/laravel-permission": "^3.13",
+        "staudenmeir/eloquent-has-many-deep": "^1.12"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.3",
