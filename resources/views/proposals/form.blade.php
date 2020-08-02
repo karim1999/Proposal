@@ -69,7 +69,7 @@
                         </div>
                     </div>
                     <div class="kt-separator kt-separator--border-dashed kt-separator--space-lg"></div>
-                    <h3 class="kt-section__title">2. Settings Info:</h3>
+                    <h3 class="kt-section__title">3. Settings Info:</h3>
                     <div class="kt-section__body">
                     </div>
                 </div>
@@ -94,6 +94,8 @@
 
 @endsection
 @push('scripts')
-    <script src="{{asset('assets/js/pages/crud/file-upload/ktavatar.js')}}" type="text/javascript"></script>
+    <script src="{{asset('assets/plugins/custom/ckeditor/ckeditor-classic.bundle.js')}}" type="text/javascript"></script>
+
+    <script src="{{asset('assets/js/pages/crud/forms/editors/ckeditor-classic.js')}}" type="text/javascript"></script>
 
 @endpush

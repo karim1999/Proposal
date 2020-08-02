@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Company;
 use App\Proposal;
+use App\ProposalSection;
+use App\Text;
 use App\Theme;
 use Illuminate\Http\Request;
 
@@ -58,6 +60,15 @@ class ProposalController extends Controller
         $proposal->theme()->associate($theme);
         auth()->user()->proposals()->save($proposal);
         $proposal->user()->associate(auth()->user());
+
+//        $text= new Text();
+//        $text->value= $request->post('content');
+//        $text->save();
+//
+//        $section= new ProposalSection();
+//        $section->name= "Section";
+//        $section->proposal()->associate($proposal);
+//        $text->section()->save($section);
 
         return redirect()->route('proposals.index')->with("status", "A proposal was added successfully.");
     }
