@@ -3,7 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Company;
+use Exception;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig;
 
 class CompanyController extends Controller
 {
@@ -11,7 +16,7 @@ class CompanyController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -23,7 +28,7 @@ class CompanyController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -35,8 +40,10 @@ class CompanyController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
+     * @throws FileDoesNotExist
+     * @throws FileIsTooBig
      */
     public function store(Request $request)
     {
@@ -58,7 +65,7 @@ class CompanyController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show($id)
     {
@@ -68,31 +75,32 @@ class CompanyController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  Company  $company
+     * @return Response
      */
-    public function edit($id)
+    public function edit(Company $company)
     {
         //
-        $this->data['company']= Company::findOrFail($id);
+        $this->data['company']= $company;
         return view('companies.form', $this->data);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Company $company
+     * @return Response
+     * @throws FileDoesNotExist
+     * @throws FileIsTooBig
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Company $company)
     {
         //
         $validatedData = $request->validate([
             'name' => 'required',
             'website' => 'required|URL',
         ]);
-        $company= Company::findOrFail($id);
         $company->name= $request->post('name');
         $company->website= $request->post('website');
         $company->save();
@@ -104,13 +112,14 @@ class CompanyController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Company $company
+     * @return RedirectResponse
+     * @throws Exception
      */
-    public function destroy($id)
+    public function destroy(Company $company)
     {
         //
-        Company::destroy($id);
+        $company->delete();
         return redirect()->route('companies.index')->with("status", "A company was deleted successfully.");
     }
 }

@@ -7,7 +7,9 @@ use App\Proposal;
 use App\ProposalSection;
 use App\Text;
 use App\Theme;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class ProposalController extends Controller
 {
@@ -15,7 +17,7 @@ class ProposalController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -27,7 +29,7 @@ class ProposalController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -41,8 +43,8 @@ class ProposalController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function store(Request $request)
     {
@@ -77,7 +79,7 @@ class ProposalController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show($id)
     {
@@ -87,13 +89,13 @@ class ProposalController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Proposal $proposal
+     * @return Response
      */
-    public function edit($id)
+    public function edit(Proposal $proposal)
     {
         //
-        $this->data['proposal']= Proposal::findOrFail($id);
+        $this->data['proposal']= $proposal;
         $this->data['companies']= auth()->user()->companies;
         $this->data['themes']= Theme::all();
         return view('proposals.form', $this->data);
@@ -102,11 +104,11 @@ class ProposalController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Proposal $proposal
+     * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Proposal $proposal)
     {
         //
         $validatedData = $request->validate([
@@ -116,7 +118,6 @@ class ProposalController extends Controller
         ]);
         $company= Company::findOrFail($request->post('company'));
         $theme= Theme::findOrFail($request->post('theme'));
-        $proposal= Proposal::findORFail($id);
         $proposal->name= $request->post('name');
         $proposal->company()->associate($company);
         $proposal->theme()->associate($theme);
@@ -130,14 +131,14 @@ class ProposalController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return Response
+     * @throws Exception
      */
-    public function destroy($id)
+    public function destroy(Proposal $proposal)
     {
         //
-        //
-        Proposal::destroy($id);
-        return redirect()->route('proposals.index')->with("status", "A proposal was deleted successfully.");
+        $proposal->delete();
+        return redirect()->back()->with("status", "A proposal was deleted successfully.");
     }
 }

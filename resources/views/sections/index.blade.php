@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'Proposals')
+@section('title', 'Sections')
 @section('content')
     @if (session('status'))
         <div class="alert alert-success">
@@ -18,16 +18,31 @@
 											<i class="kt-font-brand flaticon2-line-chart"></i>
 										</span>
                     <h3 class="kt-portlet__head-title">
-                        Proposals
+                        {{$proposal->name}} >> Sections
                     </h3>
                 </div>
                 <div class="kt-portlet__head-toolbar">
                     <div class="kt-portlet__head-wrapper">
                         <div class="kt-portlet__head-actions">
-                            <a href="{{route('proposals.create')}}" class="btn btn-brand btn-elevate btn-icon-sm">
-                                <i class="la la-plus"></i>
-                                New Proposal
-                            </a>
+                            <div class="dropdown">
+                                <button class="btn btn-brand dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Add
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                    <a href="{{route('proposal-section.create', ["proposal" => $proposal->id, "type" => "text"])}}" class="dropdown-item">
+                                        <i class="fa fa-file-alt"></i>
+                                        Text
+                                    </a>
+                                    <a href="{{route('proposal-section.create', ["proposal" => $proposal->id, "type" => "image"])}}" class="dropdown-item">
+                                        <i class="fa fa-file-image"></i>
+                                        Image
+                                    </a>
+                                    <a href="{{route('proposal-section.create', ["proposal" => $proposal->id, "type" => "video"])}}" class="dropdown-item">
+                                        <i class="fa fa-file-video"></i>
+                                        Video
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -39,36 +54,31 @@
                     <thead>
                     <tr>
                         <th>Record ID</th>
-                        <th>Proposal Name</th>
-                        <th>Owner</th>
+                        <th>Proposal</th>
+                        <th>Section Name</th>
+                        <th>Section Type</th>
                         <th>Created At</th>
-                        <th>Status</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($proposals as $proposal)
-                        <form action="{{route('proposals.destroy', $proposal->id)}}" method="post">
+                    @foreach($sections as $section)
+                        <form action="{{route('proposal-section.destroy', ["proposal" => $proposal->id, "proposal_section" => $section->id])}}" method="post">
                             @method('DELETE')
                             @csrf
                             <tr>
-                                <td>{{$proposal->id}}</td>
-                                <td>{{$proposal->name}}</td>
-                                <td>{{$proposal->user->name}}</td>
-                                <td>{{$proposal->created_at}}</td>
-                                <td>{{$proposal->id}}</td>
+                                <td>{{$section->id}}</td>
+                                <td>{{$section->proposal->name}}</td>
+                                <td>{{$section->name}}</td>
+                                <td>{{$section->type}}</td>
+                                <td>{{$section->created_at}}</td>
                                 <td>
                                     <button type="submit" class="btn btn-danger btn-icon" data-toggle="kt-popover" data-placement="top" data-content="Delete">
                                         <i class="fa fa-times"></i>
                                     </button>
-                                    <a href="{{route('proposals.edit', $proposal->id)}}">
+                                    <a href="{{route('proposal-section.edit', ["proposal" => $proposal->id, "proposal_section" => $section->id])}}">
                                         <button type="button" class="btn btn-outline-brand btn-icon" data-toggle="kt-popover" data-placement="top" data-content="Edit">
                                             <i class="fa fa-pencil-alt"></i>
-                                        </button>
-                                    </a>
-                                    <a href="{{route('proposal-section.index', $proposal->id)}}">
-                                        <button type="button" class="btn btn-dark btn-icon" data-container="body" data-toggle="kt-popover" data-placement="top" data-content="Sections">
-                                            <i class="fa fa-cubes"></i>
                                         </button>
                                     </a>
                                 </td>

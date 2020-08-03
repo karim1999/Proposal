@@ -20,4 +20,5 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::resource('companies', 'CompanyController');
 Route::resource('proposals', 'ProposalController');
 Route::resource('users', 'UserController');
-Route::resource('proposal-section', 'ProposalSectionController');
+Route::resource('{proposal}/proposal-section', 'ProposalSectionController')->except('create');
+Route::get('{proposal}/section/add/{type}', 'ProposalSectionController@create')->name("proposal-section.create");
