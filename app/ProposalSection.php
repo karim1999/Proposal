@@ -7,9 +7,22 @@ use Illuminate\Database\Eloquent\Model;
 class ProposalSection extends Model
 {
     public static $types= [
-        'App\Text' => "Text",
-        'App\Image' => "Image",
-        'App\Video' => "Video",
+        'App\Text' => [
+            "name" => "Text",
+            "accept" => "",
+        ],
+        'App\Image' => [
+            "name" => "Image",
+            "accept" => "image/*",
+        ],
+        'App\Video' => [
+            "name" => "Video",
+            "accept" => "video/*",
+        ],
+        'App\Document' => [
+            "name" => "Video",
+            "accept" => ".pdf,.doc,.docx",
+        ],
     ];
     //
     public function mediable()
@@ -22,6 +35,6 @@ class ProposalSection extends Model
     }
     public function getTypeAttribute()
     {
-        return ProposalSection::$types[$this->mediable_type];
+        return ProposalSection::$types[$this->mediable_type]["name"];
     }
 }

@@ -41,6 +41,10 @@
                                         <i class="fa fa-file-video"></i>
                                         Video
                                     </a>
+                                    <a href="{{route('proposal-section.create', ["proposal" => $proposal->id, "type" => "document"])}}" class="dropdown-item">
+                                        <i class="fa fa-file-pdf"></i>
+                                        Document
+                                    </a>
                                 </div>
                             </div>
                         </div>

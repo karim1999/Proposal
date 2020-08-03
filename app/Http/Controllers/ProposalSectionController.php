@@ -41,6 +41,7 @@ class ProposalSectionController extends Controller
         //
         $this->data['proposal']= $proposal;
         $this->data['type']= $type;
+        $this->data['accept']= ProposalSection::$types["App\\".ucfirst($type)]["accept"];
         $this->data['section']= new ProposalSection();
         return view('sections.form', $this->data);
     }
@@ -55,22 +56,27 @@ class ProposalSectionController extends Controller
     public function store(Request $request, Proposal $proposal)
     {
         //
-        return $request;
         $validatedData = $request->validate([
             'name' => 'required',
         ]);
 
         $type= $request->post('type');
         $mediable= "";
-        if($type == "text")
+        if($type == "text"){
             $mediable= new Text();
-        else if($type == "image")
+        }
+        else if($type == "image"){
             $mediable= new Image();
-        else if($type == "video")
+        }
+        else if($type == "video"){
             $mediable= new Video();
+        }
 
         $mediable->value= $request->post('content');
         $mediable->save();
+        if($type != "text" && $request->file('file')){
+            $mediable->addMediaFromRequest("file")->toMediaCollection('file');
+        }
 
         $section= new ProposalSection();
         $section->name= $request->post('name');
@@ -102,7 +108,8 @@ class ProposalSectionController extends Controller
     {
         //
         $this->data['proposal']= $proposal;
-        $this->data['type']= ProposalSection::$types[$proposalSection->mediable_type];
+        $this->data['type']= ProposalSection::$types[$proposalSection->mediable_type]["name"];
+        $this->data['accept']= ProposalSection::$types[$proposalSection->mediable_type]["accept"];
         $this->data['section']= $proposalSection;
         return view('sections.form', $this->data);
     }

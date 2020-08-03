@@ -71,6 +71,11 @@
                                             <i class="fa fa-cubes"></i>
                                         </button>
                                     </a>
+                                    <a target="_blank" href="{{route('proposals.show', $proposal->id)}}">
+                                        <button type="button" class="btn btn-success btn-icon" data-container="body" data-toggle="kt-popover" data-placement="top" data-content="View">
+                                            <i class="fa fa-eye"></i>
+                                        </button>
+                                    </a>
                                 </td>
                             </tr>
                         </form>

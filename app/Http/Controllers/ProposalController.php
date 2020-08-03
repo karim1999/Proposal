@@ -78,12 +78,14 @@ class ProposalController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return Response
+     * @param Proposal $proposal
+     * @return void
      */
-    public function show($id)
+    public function show(Proposal $proposal)
     {
         //
+        $this->data['proposal']= $proposal;
+        return view("templates.".$proposal->theme->name, $this->data);
     }
 
     /**

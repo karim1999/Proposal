@@ -57,7 +57,7 @@
                                         {!! old('content', $section->id ? $section->mediable->value : "") !!}
                                     </textarea>
                                 @else
-                                    <input type="file" placeholder="Add your file here" class="form-control @error('file') is-invalid @enderror" name="file" value="{{ old('file') }}" required autocomplete="file" autofocus>
+                                    <input accept="{{$accept}}" type="file" placeholder="Add your file here" class="form-control @error('file') is-invalid @enderror" name="file" value="{{ old('file') }}" required autocomplete="file" autofocus>
                                 @endif
                             </div>
                         </div>

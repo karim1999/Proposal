@@ -1,0 +1,71 @@
+@mixin button($size, $background, $color, $border-radius) {
+    font-family: $arabic-font;
+    cursor: pointer;
+    background-color: $background;
+    font-size: $size;
+    color: $color;
+    border-radius: $border-radius;
+}
+@mixin button-light-rounded($size, $background-color: $secondary2_color) {
+    @include button($size, transparent, $background-color, 25px);
+    padding: 12px 20px;
+    border: $background-color solid thin;
+}
+@mixin button-filled($size) {
+    @include button($size, $secondary2_color, $secondary_color, 5px);
+    padding: 15px;
+    width: 100%;
+}
+@mixin display-flex($flex-direction, $justify-content, $align-items, $wrap: nowrap){
+    display: flex;
+    flex-direction: $flex-direction;
+    align-items: $align-items;
+    justify-content: $justify-content;
+    flex-wrap: $wrap;
+}
+@mixin input(){
+    border: transparent;
+    background-color: $primary_color;
+    font-family: $arabic-font;
+    border-radius: 5px;
+    font-size: $h4;
+    height: 30px;
+    padding: 8px;
+    width: 100%;
+    outline: none;
+    color: $font_color;
+    &:focus{
+        border: $border;
+        border-color: $secondary2_color !important;
+        background-color: $secondary_color;
+    }
+}
+@mixin textarea(){
+    @include input;
+    height: 200px;
+}
+@mixin select(){
+    @include input;
+    height: 48px;
+}
+@mixin alert($background-color, $font-color){
+    text-align: right;
+    padding: 20px;
+    color: $font-color;
+    background-color: $background-color;
+    margin: 20px;
+    button{
+        @include button-filled($h5);
+        width: auto;
+    }
+}
+@mixin box($background-color, $font_color, $border-radius, $padding){
+    background-color: $background-color;
+    border-radius: $border-radius;
+    padding: $padding;
+    color: $font_color;
+}
+@mixin light-box(){
+    @include box($secondary_color, $font_color, 10px, 0px 30px);
+    border: $border;
+}

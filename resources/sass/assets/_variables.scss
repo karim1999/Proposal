@@ -1,0 +1,62 @@
+// Body
+$body-bg: #f8fafc;
+
+// Typography
+$font-family-sans-serif: 'Nunito', sans-serif;
+$arabic-font: 'arabicFont';
+$font-size-base: 0.9rem;
+$line-height-base: 1.6;
+
+// Colors
+$indigo: #6574cd;
+$purple: #9561e2;
+$pink: #f66d9b;
+$orange: #f6993f;
+$yellow: #ffed4a;
+$green: #38c172;
+$teal: #4dc0b5;
+$cyan: #6cb2eb;
+$white: #ffffff;
+$black: rgba(97, 97, 97, 0.9);
+$warning: #ff4e6aff;
+$success: #6BBD6E;
+$info: #EDF2F7;
+
+//Light Colors
+$grey: #f8fbfcff;
+$blue: #55c4ffff;
+$red: #ff4e6aff;
+
+//Dark Colors
+$dark_grey: #808080ff;
+$dark_blue: #1e2a32ff;
+$darker_blue: #2b3844ff;
+
+//Main Colors (Light)
+$primary_color: $grey;
+$secondary_color: $white;
+$secondary2_color: $red;
+$secondary3_color: $blue;
+$font_color: $black;
+$border: #e0e0e0 solid 1px;
+
+//Main Colors (Dark)
+//$primary_color: $dark_blue;
+//$secondary_color: $darker_blue;
+//$secondary2_color: $red;
+//$secondary3_color: $blue;
+//$font_color: $grey;
+//$border: none;
+
+
+//Font Size
+$h1: 20px;
+$h2: 18px;
+$h3: 16px;
+$h4: 14px;
+$h5: 12px;
+$h6: 10px;
+
+
+//Border
+$box-shadow: 0px 0px 5px 2px rgba(203, 203, 203, 0.2);
