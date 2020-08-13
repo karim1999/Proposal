@@ -1,56 +1,36 @@
-<!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.template')
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>{{ config('app.name', 'Laravel') }}</title>
-
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-</head>
-<body>
-<div class="main-container">
-    <div class="section header">
-        <h1>Header</h1>
+@section('title', 'Sections')
+@section('content')
+    <div id="app">
+        <draggable v-model="sections">
+            <transition-group name="slideDown"  enter-active-class="slideInDown" leave-active-class="slideOutUp">
+                <div v-for="(section, index) in sections" :key="index" class="section">
+                    <button v-if="sections.length != 1" @click="$store.commit('deleteSection', index)" class="control-btn delete-button">
+                        <i class="fa fa-times-circle"></i>
+                    </button>
+                    <button @click="$store.commit('addSection', index)" class="control-btn add-button">
+                        <i class="fa fa-plus-circle"></i>
+                    </button>
+                    <template v-if="section.type == 'new'">
+                        <new-section :index="index" />
+                    </template>
+                    <template v-else-if="section.type == 'text'">
+                        <text-section :index="index"/>
+                    </template>
+                    <template v-else-if="section.type == 'image'">
+                        <image-section :index="index"/>
+                    </template>
+                    <template v-else-if="section.type == 'video'">
+                        <video-section :index="index"/>
+                    </template>
+                    <template v-else-if="section.type == 'embed'">
+                        <embed-section :index="index"/>
+                    </template>
+                </div>
+            </transition-group>
+        </draggable>
     </div>
-    <div class="section company-info">
-        <img src="{{$proposal->company->getFirstMediaUrl('logo')}}" width="200" alt="">
-        <div>
-            <h1>{{$proposal->name}}</h1>
-            <h3>{{$proposal->company->name}}</h3>
-        </div>
-    </div>
-    @foreach($proposal->sections as $section)
-        <div class="section mediable">
-            <h1>{{$section->name}}</h1>
-            @if ($section->type == "Text")
-                {!! $section->mediable->value !!}
-            @endif
-            @if ($section->type == "Image")
-                {!! $section->mediable->value !!}
-            @endif
-            @if ($section->type == "Video")
-                {!! $section->mediable->value !!}
-            @endif
-            @if ($section->type == "Document")
-                {!! $section->mediable->value !!}
-            @endif
-        </div>
-    @endforeach
-    <div class="section header">
-        <h1>Footer</h1>
-    </div>
-</div>
-</body>
-</html>
+@endsection
+@push('scripts')
+@endpush

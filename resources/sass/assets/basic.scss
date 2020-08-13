@@ -1,7 +1,6 @@
 body {
     padding: 0;
     margin: 0;
-    font-family: $arabic-font;
     color: $font_color;
 }
 .no-padding {
@@ -84,15 +83,6 @@ a {
         color: $secondary2_color;
     }
 }
-.horizontal-list {
-    flex: 1;
-    padding: 0;
-    @include display-flex(row, space-between, center);
-    li {
-        list-style-type: none;
-    }
-}
-
 .alert-success {
     @include alert($success, $white);
 }
@@ -105,60 +95,4 @@ a {
 .box{
     @include light-box;
     margin-top: 20px;
-}
-.input-container {
-    display: flex;
-    position: relative;
-    input {
-        @include input;
-        &[type= file]::-webkit-file-upload-button {
-            visibility: hidden;
-        }
-        &:disabled {
-            background-color: $primary_color !important;
-        }
-
-        &[type= file]::before {
-            content: 'استعراض';
-            border: $border;
-            border-radius: 10px;
-            padding: 5px 8px;
-            outline: none;
-            white-space: nowrap;
-            -webkit-user-select: none;
-            cursor: pointer;
-            text-shadow: 1px 1px #fff;
-            font-size: $h4;
-        }
-    }
-    textarea {
-        @include textarea;
-    }
-    select {
-        @include select
-    }
-    img, .icon {
-        left: 0;
-        position: absolute;
-        padding: 14px 4px;
-        height: 20px;
-        text-align: center;
-    }
-}
-
-ul.pagination{
-    @include display-flex(row, center, center);
-    li {
-        font-size: $h4;
-        margin: 10px;
-        list-style-type: none;
-        &.active {
-            color: $secondary2_color;
-        }
-    }
-}
-
-.empty {
-    color: $secondary2_color;
-    font-size: $h4;
 }

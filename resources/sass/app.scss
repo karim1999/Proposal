@@ -3,6 +3,10 @@
 
 // Variables
 @import 'assets/variables';
+@import '~@fortawesome/fontawesome-free/css/all.min.css';
+$animationDuration: 0.2s;
+@import "~vue2-animate/src/sass/vue2-animate.scss";
+
 
 @import 'assets/mixins';
 @import 'assets/basic';
